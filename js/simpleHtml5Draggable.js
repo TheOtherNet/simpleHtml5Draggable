@@ -5,44 +5,20 @@
   SimpleHtml5DraggableResizable = (function() {
 
     function SimpleHtml5DraggableResizable(element_, options) {
+      var opt, _i, _len, _ref;
       this.element_ = element_;
       this.options = $.extend({}, options);
       this.element = $(this.element_);
-      this.init();
-    }
-
-    SimpleHtml5DraggableResizable.prototype.init = function() {
-      this.do_resizable();
-      return this.assign_events();
-    };
-
-    SimpleHtml5DraggableResizable.prototype.do_resizable = function() {
-      this.element.data("width", this.element.css('width'));
-      this.element.data("height", this.element.css('height'));
-      return this.element = (($(this.element_)).wrap('<div class="resizable" data-offset="' + this.options.offset + '">')).parent();
-    };
-
-    SimpleHtml5DraggableResizable.prototype.assign_events = function() {
-      var opt, _i, _len, _ref, _results;
-      _ref = ['mouseover', 'drag', 'mouseout', 'dragstart', 'dragend', 'click'];
-      _results = [];
+      this.element = (($(this.element_)).wrap('<div class="resizable">')).parent();
+      _ref = ['mouseover', 'drag', 'mouseout', 'dragstart', 'dragend'];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         opt = _ref[_i];
-        _results.push(this.element.on(opt, this[opt]));
+        this.element.on(opt, this[opt]);
       }
-      return _results;
-    };
+    }
 
     SimpleHtml5DraggableResizable.prototype.mouseover = function() {
       return ($(this)).toggleClass('selectedObject');
-    };
-
-    SimpleHtml5DraggableResizable.prototype.contextmenu = function(ev) {
-      ($('#menu'))[0].dataset['currentTarget'] = $(ev.target).attr('id');
-      ($('#menu')).css('top', ev.y - 35);
-      ($('#menu')).css('left', ev.x - 300);
-      ($('#menu')).show();
-      return false;
     };
 
     SimpleHtml5DraggableResizable.prototype.mouseout = function() {
