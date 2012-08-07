@@ -7,31 +7,13 @@ class SimpleHtml5DraggableResizable
   constructor: (@element_, options) ->
     @options = $.extend {}, options
     @element = $ @element_
-    @init()
-
-  init: ->
-    @do_resizable()
-    @assign_events()
-
-  do_resizable: ->
-    @element.data  "width",  @element.css('width')
-    @element.data  "height",  @element.css('height')
-    @element = (($ @element_) .wrap '<div class="resizable" data-offset="' + @options.offset +  '">').parent()
-
-  assign_events: ->
+    @element = (($ @element_) .wrap '<div class="resizable">').parent()
     @element.on opt, this[opt] for opt in [ 'mouseover', 'drag',
       'mouseout', 'dragstart',
-      'dragend', 'click']
+      'dragend']
 
   mouseover: ->
     ($ this).toggleClass('selectedObject')
-
-  contextmenu: (ev) ->
-      ($ '#menu')[0] .dataset['currentTarget'] = $(ev.target).attr('id')
-      ($ '#menu') .css 'top', ev.y - 35
-      ($ '#menu') .css 'left', ev.x - 300
-      ($ '#menu') .show()
-      return false
 
   mouseout: ->
     ($ this).toggleClass('selectedObject')
